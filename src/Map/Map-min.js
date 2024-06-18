@@ -1,0 +1,1 @@
+class Map{constructor(r){this.map=new Array(r).fill(null).map((()=>new Array(r).fill(null)))}render(){this.map.forEach(((r,a)=>{r.forEach(((r,a)=>{r&&r.draw()}))}))}set(r,a){this.map=r}get(){return this.map}}
