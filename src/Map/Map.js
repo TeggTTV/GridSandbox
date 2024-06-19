@@ -1,17 +1,17 @@
 class Map {
-  constructor(size, droppers = 1) {
-    this.map = new Array(size + 2)
+  constructor(sizeX, sizeY, droppers = 1) {
+    this.map = new Array(sizeY + 2)
       .fill(null)
-      .map(() => new Array(size + 2).fill(null))
+      .map(() => new Array(sizeX + 2).fill(null))
       .map((row, y) =>
         row.map((tile, x) => {
-          if (y === 0 || y === size + 1 || x === 0 || x === size + 1) {
-            return new Tile("empty", x, y, size + 2);
+          if (y === 0 || y === sizeY + 1 || x === 0 || x === sizeX + 1) {
+            return new Tile("empty", x, y, sizeX + 2, sizeY + 2);
           }
-          return new Tile("ground", x, y, size + 2);
+          return new Tile("ground", x, y, sizeX + 2, sizeY + 2);
         })
       );
-    this.addRandomDroppers(size, droppers);
+    this.addRandomDroppers(sizeX, sizeY, droppers);
   }
 
   render() {
@@ -31,26 +31,57 @@ class Map {
   get() {
     return this.map;
   }
-  addRandomDroppers(size, num) {
+  addRandomDroppers(sizeX, sizeY, num) {
+    let sum = sizeX * 2 + sizeY * 2;
     for (let i = 0; i < num; i++) {
-      let sum = size * 3;
       let x = Math.floor(Math.random() * sum);
-      if (x < size) {
+      if (x < sizeX) {
         // top
-        this.map[0][x + 1] = new Dropper("water", x + 1, 0, size + 2);
-      } else if (x < size * 2) {
+        this.map[0][x + 1] = new Dropper(
+          "water",
+          x + 1,
+          0,
+          sizeX + 2,
+          sizeY + 2,
+          "down"
+        );
+      } else if (x < sizeX + sizeY) {
         // right
-        let e = (x % size);
-        console.log(e, size + 1);
-        this.map[e + 1][size + 1] = new Dropper("water", size + 1, e + 1, size + 2);
-      } else if(x < size * 3) {
+        let e = x % sizeX;
+        this.map[e + 1][sizeX + 1] = new Dropper(
+          "water",
+          sizeX + 1,
+          e + 1,
+          sizeX + 2,
+          sizeY + 2,
+          "left"
+        );
+      } else if (x < sizeX * 2 + sizeY) {
         // bottom
-        let e = size - (x % size);
-        this.map[size + 1][e] = new Dropper("water", e, size + 1, size + 2);
-      } else if(x < size * 4) {
+        let e = sizeX - (x - sizeX - sizeY);
+        this.map[sizeY + 1][e] = new Dropper(
+          "water",
+          e,
+          sizeY + 1,
+          sizeX + 2,
+          sizeY + 2,
+          "up"
+        );
+      } else if (x < sizeX * 2 + sizeY * 2) {
         // left
-        this.map[size - (x % size)][0] = new Dropper("water", 0, size - (x % size), size + 2);
+        let e = sizeY - (x - sizeX * 2 - sizeY);
+        this.map[e][0] = new Dropper(
+          "water",
+          0,
+          e,
+          sizeX + 2,
+          sizeY + 2,
+          "right"
+        );
       }
     }
+  }
+  resetDroppers() {
+    this.addRandomDroppers(5, 5, 4);
   }
 }

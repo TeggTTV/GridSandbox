@@ -1,9 +1,10 @@
 class Tile {
-  constructor(type, x, y, size) {
+  constructor(type, x, y, sizeX, sizeY) {
     this.name = name;
     this.x = x;
     this.y = y;
-    this.size = width / size;
+    this.sizeX = width / sizeX;
+    this.sizeY = height / sizeY;
 
     this.type = type;
     this.color = 'white';
@@ -14,10 +15,10 @@ class Tile {
     if(this.type === 'empty') return;
     ctx.fillStyle = "lightgray";
     ctx.fillRect(
-      this.x * this.size,
-      this.y * this.size,
-      this.size,
-      this.size
+      this.x * this.sizeX,
+      this.y * this.sizeY,
+      this.sizeX,
+      this.sizeY
     );
     // draw text dead center of box
     ctx.fillStyle = 'black';
@@ -26,8 +27,8 @@ class Tile {
     ctx.textBaseline = 'middle';
     ctx.fillText(
       this.type,
-      this.x * this.size + this.size / 2,
-      this.y * this.size + this.size / 2
+      this.x * this.sizeX + this.sizeX / 2,
+      this.y * this.sizeY + this.sizeY / 2
     );
 
   }
