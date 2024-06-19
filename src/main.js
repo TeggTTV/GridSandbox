@@ -8,4 +8,6 @@ function render() {
   requestAnimationFrame(render);
 
   map.render();
+  entites.forEach((e) => e.render());
+
 }

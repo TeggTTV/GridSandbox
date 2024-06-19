@@ -9,3 +9,11 @@ const mouse = {
   y: 0,
   down: false
 };
+
+async function wait(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+const entites = [];
+
+const friction = .8;
