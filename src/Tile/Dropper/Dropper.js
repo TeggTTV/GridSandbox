@@ -5,7 +5,7 @@ class Dropper extends Tile {
     this.facing = facing;
     this.items = [];
 
-    this.dropInterval = 1000;
+    this.dropInterval = 500;
     this.itemToDrop = "Iron";
 
     this.dropping = false;
@@ -34,7 +34,7 @@ class Dropper extends Tile {
   setColor() {
     this.color = "red";
   }
-  dropItem() {
+  async dropItem() {
     let dropTile;
     switch (this.facing) {
       case "down":
@@ -51,10 +51,16 @@ class Dropper extends Tile {
         break;
     }
 
+    if(!dropTile.isAccepting) {
+      return;
+    }
+
     if (dropTile instanceof Tile) {
-      let item = new Item(this.itemToDrop, this.x, this.y, this.sizeX, this.sizeY);
-      item.jump(dropTile.x, dropTile.y);
-      entites.push(item);
+      let item = new Item(this, this.itemToDrop, this.x, this.y, this.sizeX, this.sizeY);
+      entities.push(item);
+      await wait(this.dropInterval / 2);
+      item.jump(dropTile, 1/60);
+
     }
   }
   async startDropping() {

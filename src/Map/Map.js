@@ -11,7 +11,7 @@ class Map {
           return new Tile("ground", x, y, sizeX + 2, sizeY + 2);
         })
       );
-    this.addRandomDroppers(sizeX, sizeY, droppers);
+    // this.addRandomDroppers(sizeX, sizeY, droppers);
   }
 
   render() {
@@ -38,7 +38,7 @@ class Map {
       if (x < sizeX) {
         // top
         this.map[0][x + 1] = new Dropper(
-          "water",
+          "dropper",
           x + 1,
           0,
           sizeX + 2,
@@ -49,7 +49,7 @@ class Map {
         // right
         let e = x % sizeX;
         this.map[e + 1][sizeX + 1] = new Dropper(
-          "water",
+          "dropper",
           sizeX + 1,
           e + 1,
           sizeX + 2,
@@ -60,7 +60,7 @@ class Map {
         // bottom
         let e = sizeX - (x - sizeX - sizeY);
         this.map[sizeY + 1][e] = new Dropper(
-          "water",
+          "dropper",
           e,
           sizeY + 1,
           sizeX + 2,
@@ -71,7 +71,7 @@ class Map {
         // left
         let e = sizeY - (x - sizeX * 2 - sizeY);
         this.map[e][0] = new Dropper(
-          "water",
+          "dropper",
           0,
           e,
           sizeX + 2,
